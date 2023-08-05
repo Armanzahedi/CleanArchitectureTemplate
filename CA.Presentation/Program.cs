@@ -1,7 +1,7 @@
 using System.Reflection;
 using CA.Application;
-using CA.Application.Common.Extensions;
 using CA.Infrastructure;
+using CA.Infrastructure.Common;
 using CA.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);

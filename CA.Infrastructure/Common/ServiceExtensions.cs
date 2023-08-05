@@ -2,7 +2,7 @@
 using CA.Application.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CA.Application.Common.Extensions;
+namespace CA.Infrastructure.Common;
 
 public static class ServiceExtensions
 {
@@ -19,9 +19,9 @@ public static class ServiceExtensions
             foreach (var implementedInterface in implementedInterfaces)
             {
                 if (IsServiceInterface(implementedInterface) == false)
-                    services.AddService(implementedInterface,serviceType, GetServiceLifetime(implementedInterface));
+                    AddService(services, implementedInterface,serviceType, GetServiceLifetime(implementedInterface));
                 else
-                    services.AddService(serviceType, GetServiceLifetime(implementedInterface));
+                    AddService(services, serviceType, GetServiceLifetime(implementedInterface));
 
             }
         }
