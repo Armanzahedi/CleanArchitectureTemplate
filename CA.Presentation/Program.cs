@@ -1,4 +1,6 @@
+using System.Reflection;
 using CA.Application;
+using CA.Application.Common.Extensions;
 using CA.Infrastructure;
 using CA.Infrastructure.Persistence;
 
@@ -14,6 +16,9 @@ builder.Services
     .AddApplicationServices(builder.Configuration)
     .AddInfrastructureServices(builder.Configuration);
 
+builder.Services.AddServicesFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.AddServicesFromAssembly(typeof(CA.Infrastructure.AssemblyMarker).Assembly);
+builder.Services.AddServicesFromAssembly(typeof(CA.Application.AssemblyMarker).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
