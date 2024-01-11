@@ -1,8 +1,8 @@
 ﻿using CA.Application.Common.Interfaces.Persistence;
-using CA.Application.Projects.Specifications;
 using MapsterMapper;
 using MediatR;
 using CA.Domain.Project;
+using CA.Domain.Project.Specs;
 
 namespace CA.Application.Projects.Queries.GetProject;
 

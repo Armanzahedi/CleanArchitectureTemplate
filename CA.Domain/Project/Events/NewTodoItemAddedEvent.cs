@@ -1,4 +1,5 @@
 ﻿using CA.Domain.Common;
+using CA.Domain.Common.DomainEvent;
 using CA.Domain.Project.Entities;
 
 namespace CA.Domain.Project.Events;

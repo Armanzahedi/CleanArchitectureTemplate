@@ -2,9 +2,7 @@
 
 public abstract class ValueObject
 {
-    // Learn more: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
-
-    protected static bool EqualOperator(ValueObject left, ValueObject right)
+    protected static bool EqualOperator(ValueObject? left, ValueObject? right)
     {
         if (left is null ^ right is null)
         {
@@ -14,14 +12,14 @@ public abstract class ValueObject
         return left?.Equals(right) != false;
     }
 
-    protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+    protected static bool NotEqualOperator(ValueObject? left, ValueObject? right)
     {
         return !(EqualOperator(left, right));
     }
 
-    protected abstract IEnumerable<object> GetEqualityComponents();
+    protected abstract IEnumerable<object?> GetEqualityComponents();
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj == null || obj.GetType() != GetType())
         {

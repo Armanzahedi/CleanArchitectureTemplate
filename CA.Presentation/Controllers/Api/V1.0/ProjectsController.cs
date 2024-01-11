@@ -1,7 +1,7 @@
-﻿using CA.Presentation.Models.Projects;
+﻿using CA.Application.Common.Extensions.PaginatedList;
+using CA.Presentation.Models.Projects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using CA.Application.Common.Models;
 using CA.Application.Projects;
 using CA.Application.Projects.Commands.AddTodo;
 using CA.Application.Projects.Commands.CreateProject;
@@ -9,6 +9,7 @@ using CA.Application.Projects.Commands.DeleteProject;
 using CA.Application.Projects.Commands.UpdateProject;
 using CA.Application.Projects.Queries.GetProject;
 using CA.Application.Projects.Queries.GetProjects;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CA.Presentation.Controllers.Api.V1._0;
 
@@ -28,6 +29,7 @@ public class ProjectsController : ApiControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<PaginatedList<ProjectResult>>> GetProjects([FromQuery] GetProjectsQuery query)
     {
         return await Mediator.Send(query);

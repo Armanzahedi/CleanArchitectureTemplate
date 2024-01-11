@@ -1,7 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using CA.Domain.Common;
-using CA.Domain.Common.Attributes;
-using CA.Domain.Common.Interfaces;
+using CA.Domain.Common.Entity;
 using CA.Domain.Project.Entities;
 using CA.Domain.Project.Enums;
 using CA.Domain.Project.Events;

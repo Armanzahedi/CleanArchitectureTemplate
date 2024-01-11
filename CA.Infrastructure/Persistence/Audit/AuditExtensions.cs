@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using CA.Domain.Common.Attributes;
+using CA.Domain.Common.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using CA.Application.Common.Interfaces.Services;
 using CA.Domain.Common;
+using CA.Domain.Common.Entity;
 
 namespace CA.Infrastructure.Persistence.Audit.Interceptors;
 

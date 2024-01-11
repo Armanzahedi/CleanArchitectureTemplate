@@ -1,24 +1,21 @@
-using System.Reflection;
 using CA.Application;
 using CA.Infrastructure;
-using CA.Infrastructure.Common;
+using CA.Infrastructure.Identity;
 using CA.Infrastructure.Persistence;
+using CA.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Services
-    .AddApplicationServices(builder.Configuration)
-    .AddInfrastructureServices(builder.Configuration);
+    .AddPresentation()
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration);
+
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -27,11 +24,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-// app.MapControllers();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthorization();
+app.AddIdentityEndpoints("/auth");
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(

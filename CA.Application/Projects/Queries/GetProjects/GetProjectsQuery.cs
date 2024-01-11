@@ -1,10 +1,11 @@
-﻿using CA.Application.Common.Interfaces.Persistence;
-using CA.Application.Common.Models;
+﻿using CA.Application.Common.Exceptions;
+using CA.Application.Common.Extensions.PaginatedList;
+using CA.Application.Common.Interfaces.Persistence;
 using MapsterMapper;
 using MediatR;
 using CA.Application.Projects.Queries.GetProject;
-using CA.Application.Projects.Specifications;
 using CA.Domain.Project;
+using CA.Domain.Project.Specs;
 
 namespace CA.Application.Projects.Queries.GetProjects;
 

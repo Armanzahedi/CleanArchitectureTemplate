@@ -1,6 +1,5 @@
 ﻿using CA.Application.Common.Interfaces.Persistence;
 using MediatR;
-using CA.Application.Projects.Specifications;
 using CA.Domain.Project;
 
 namespace CA.Application.Projects.Commands.AddTodo;

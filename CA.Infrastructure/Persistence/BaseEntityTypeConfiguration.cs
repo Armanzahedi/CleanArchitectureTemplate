@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CA.Domain.Common.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using CA.Domain.Common.Interfaces;
 
 namespace CA.Infrastructure.Persistence;
 

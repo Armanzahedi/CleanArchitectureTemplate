@@ -1,6 +1,5 @@
 ﻿using Ardalis.Specification;
-using CA.Application.Common.Models;
-using CA.Domain.Common.Interfaces;
+using CA.Domain.Common.Entity;
 
 namespace CA.Application.Common.Interfaces.Persistence;
 

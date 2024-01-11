@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using CA.Domain.Common;
-using CA.Domain.Common.Attributes;
+using CA.Domain.Common.Entity;
 
 namespace CA.Domain.Project.Entities;
 
