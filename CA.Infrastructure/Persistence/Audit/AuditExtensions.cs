@@ -7,6 +7,9 @@ namespace CA.Infrastructure.Persistence.Audit;
 
 public static class AuditExtensions
 {
+    private static readonly ConcurrentDictionary<Type, bool> AuditableTypeCache = new();
+    private static readonly ConcurrentDictionary<(Type, string), bool> NotAuditablePropertyCache = new();
+
     internal static bool ShouldBeAudited(this EntityEntry entry)
     {
         return entry.State != EntityState.Detached && entry.State != EntityState.Unchanged &&
@@ -19,28 +22,25 @@ public static class AuditExtensions
         entry.References.Any(r =>
             r.TargetEntry != null &&
             r.TargetEntry.Metadata.IsOwned() &&
-            (r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
+            r.TargetEntry.State is EntityState.Added or EntityState.Modified);
 
-    internal static bool IsAuditable(this EntityEntry entityEntry)
+    private static bool IsAuditable(this EntityEntry entityEntry)
     {
-        var hasAuditAttribute =
-            (AuditableAttribute?)Attribute.GetCustomAttribute(entityEntry.Entity.GetType(),
-                typeof(AuditableAttribute)) != null;
-
-        // return entityEntry
-        //     .Entity
-        //     .GetType()
-        //     .IsSubclassOf(typeof(AuditableEntityBase)) || hasAuditAttribute;
-        return hasAuditAttribute;
+        Type entityType = entityEntry.Entity.GetType();
+        return AuditableTypeCache.GetOrAdd(entityType, type => Attribute.IsDefined(type, typeof(AuditableAttribute)));
     }
 
     internal static bool IsAuditable(this PropertyEntry propertyEntry)
     {
-        Type entityType = propertyEntry.EntityEntry.Entity.GetType();
-        PropertyInfo? propertyInfo = entityType.GetProperty(propertyEntry.Metadata.Name);
-        bool disableAuditAttribute =
-            propertyInfo != null && Attribute.IsDefined(propertyInfo, typeof(NotAuditableAttribute));
+        var entityType = propertyEntry.EntityEntry.Entity.GetType();
+        var propertyName = propertyEntry.Metadata.Name;
 
-        return IsAuditable(propertyEntry.EntityEntry) && !disableAuditAttribute;
+        var isPropertyNotAuditable = NotAuditablePropertyCache.GetOrAdd((entityType, propertyName), key =>
+        {
+            var propertyInfo = key.Item1.GetProperty(key.Item2);
+            return propertyInfo != null && Attribute.IsDefined(propertyInfo, typeof(NotAuditableAttribute));
+        });
+
+        return IsAuditable(propertyEntry.EntityEntry) && !isPropertyNotAuditable;
     }
 }
