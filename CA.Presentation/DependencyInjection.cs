@@ -1,4 +1,5 @@
-﻿using CA.Presentation.Filters.ExceptionFilter;
+﻿using CA.Presentation.Middlewares.GlobalExceptionHandler;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
 
 namespace CA.Presentation;
@@ -7,9 +8,17 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
-        services.AddControllersWithViews(options =>
+        services.AddControllersWithViews();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails(options =>
         {
-            options.Filters.Add<ExceptionFilterAttribute>();
+            options.CustomizeProblemDetails = ctx =>
+            {
+                ctx.ProblemDetails.Instance = $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}";
+                ctx.ProblemDetails.Extensions.TryAdd("requestId", ctx.HttpContext.TraceIdentifier);
+                var activity = ctx.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
+                ctx.ProblemDetails.Extensions.TryAdd("traceId",activity?.Id);
+            };
         });
         services.AddRazorPages();
         services.AddEndpointsApiExplorer();
@@ -39,7 +48,6 @@ public static class DependencyInjection
                 }
             });
         });
-        services.AddProblemDetails();
         
         return services;
     }

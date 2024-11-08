@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CA.Presentation.Filters.ExceptionFilter;
+namespace CA.Presentation.Middlewares.GlobalExceptionHandler;
 
 public static class ExceptionHandlerProvider
 {
@@ -28,23 +28,17 @@ public static class ExceptionHandlerProvider
     public static ExceptionHandler<TException>? GetHandler<TException>() where TException : Exception
     {
         if (Handlers.TryGetValue(typeof(TException), out var handler))
-        {
             return handler as ExceptionHandler<TException>;
-        }
 
         return null;
     }
     public static IExceptionHandler? GetHandler(Type exceptionType)
     {
         if (!typeof(Exception).IsAssignableFrom(exceptionType))
-        {
             throw new ArgumentException("Type must be a subclass of Exception", nameof(exceptionType));
-        }
 
         if (Handlers.TryGetValue(exceptionType, out var handler))
-        {
             return handler as IExceptionHandler;
-        }
 
         return null;
     }
