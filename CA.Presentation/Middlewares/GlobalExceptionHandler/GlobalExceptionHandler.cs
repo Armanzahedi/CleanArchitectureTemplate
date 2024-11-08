@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using IExceptionHandler = Microsoft.AspNetCore.Diagnostics.IExceptionHandler;
 
 namespace CA.Presentation.Middlewares.GlobalExceptionHandler;
 
